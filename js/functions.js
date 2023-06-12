@@ -11,3 +11,7 @@ const checkPalindrome = (string) => {
   }
   return reverseString === normalizedString;
 };
+
+
+checkStringLength('Привет!', 10);
+checkPalindrome('ДоВод');
