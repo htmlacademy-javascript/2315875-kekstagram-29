@@ -1,6 +1,6 @@
-import {createRandomIdFromRangeGenerator} from '.util.js';
-import {getRandomArrayElement} from '.util.js';
-import {getRandomInteger} from '.util.js';
+import {createRandomIdFromRangeGenerator} from './util.js';
+import {getRandomArrayElement} from './util.js';
+import {getRandomInteger} from './util.js';
 
 const descriptions = ['Наконец-то отпуск', 'Я сказала ДА!', 'Новый член семьи', 'Вдохновляет', 'Завораживает'];
 const messages = ['Всё отлично!',
