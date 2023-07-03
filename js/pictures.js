@@ -12,8 +12,8 @@ const createPictures = (content) => {
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     picturesFragment.appendChild(pictureElement);
   });
-
-  picturesContainer.appendChild(picturesFragment);
+  console.log(picturesFragment);
+  picturesContainer.append(picturesFragment);
 };
 
 export { createPictures };
