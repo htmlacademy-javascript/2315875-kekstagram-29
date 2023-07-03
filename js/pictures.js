@@ -1,9 +1,9 @@
-const createPictures = (content) => {
+const createPictures = (contentArray) => {
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const picturesFragment = document.createDocumentFragment();
 
-  content.forEach(({ url, description, likes, comments }) => {
+  contentArray.forEach(({ url, description, likes, comments }) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     const pictureImage = pictureElement.querySelector('.picture__img');
     pictureImage.src = url;

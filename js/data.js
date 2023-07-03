@@ -22,10 +22,11 @@ const createComment = () => ({
 });
 
 const generateRandomId = createRandomIdFromRangeGenerator(1, 25);
+const generateRandomUrl = createRandomIdFromRangeGenerator(1, 25);
 
 const createPost = () => ({
   id: generateRandomId(),
-  url: `photos/${generateRandomId()}.jpg`,
+  url: `photos/${generateRandomUrl()}.jpg`,
   description: getRandomArrayElement(descriptions),
   likes: getRandomInteger(15, 200),
   comments: Array.from({ length: getRandomInteger(0, 30) }, createComment)
