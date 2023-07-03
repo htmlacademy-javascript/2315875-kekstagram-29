@@ -12,7 +12,7 @@ const createPictures = (content) => {
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     picturesFragment.appendChild(pictureElement);
   });
-  console.log(picturesFragment);
+
   picturesContainer.append(picturesFragment);
 };
 
