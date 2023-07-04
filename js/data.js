@@ -1,6 +1,6 @@
-import {createRandomIdFromRangeGenerator} from './util.js';
-import {getRandomArrayElement} from './util.js';
-import {getRandomInteger} from './util.js';
+import { createRandomIdFromRangeGenerator } from './util.js';
+import { getRandomArrayElement } from './util.js';
+import { getRandomInteger } from './util.js';
 
 const descriptions = ['Наконец-то отпуск', 'Я сказала ДА!', 'Новый член семьи', 'Вдохновляет', 'Завораживает'];
 const messages = ['Всё отлично!',
@@ -16,21 +16,22 @@ const generateRandomCommentId = createRandomIdFromRangeGenerator(0, 999999);
 
 const createComment = () => ({
   id: generateRandomCommentId(),
-  avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
+  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: getRandomArrayElement(messages),
   name: getRandomArrayElement(names),
 });
 
 const generateRandomId = createRandomIdFromRangeGenerator(1, 25);
+const generateRandomUrl = createRandomIdFromRangeGenerator(1, 25);
 
 const createPost = () => ({
   id: generateRandomId(),
-  url: `photos/${ generateRandomId() }.jpg`,
+  url: `photos/${generateRandomUrl()}.jpg`,
   description: getRandomArrayElement(descriptions),
   likes: getRandomInteger(15, 200),
   comments: Array.from({ length: getRandomInteger(0, 30) }, createComment)
 });
 
-const posts = Array.from({ length: 25 }, createPost);
+const createPosts = () => Array.from({ length: 25 }, createPost);
 
-export {posts};
+export { createPosts };
