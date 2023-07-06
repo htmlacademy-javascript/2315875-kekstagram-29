@@ -73,7 +73,7 @@ function closeBigPictureWithEsc(evt) {
     closeBigPictureButton.removeEventListener('click', closeBigPicture);
     document.removeEventListener('keydown', closeBigPictureWithEsc);
   }
-};
+}
 
 const renderData = (dataCard) => {
   createPictures(dataCard);
@@ -85,7 +85,6 @@ const renderData = (dataCard) => {
     document.body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
     bigPictureImage.setAttribute('src', photo.url);
-
     bigPictureLikes.textContent = photo.likes;
     bigPictureSocialCaption.textContent = photo.description;
     bigPictureShowingComments.textContent = openCommentCount;
