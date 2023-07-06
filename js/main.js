@@ -1,4 +1,4 @@
 import { createPosts } from './data.js';
-import { createPictures } from './pictures.js';
+import { renderData } from './fullSizePicture.js';
 
-createPictures(createPosts());
+renderData(createPosts());
