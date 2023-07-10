@@ -67,28 +67,27 @@ const areUniqueTags = (hashtags) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-let hashtagError = 'Неправильно заполнены хэштэги';
-
-// const getHashtagError = (hashtags) => {
-//   if (!isValidCount(hashtags)) {
-//     hashtagError = 'Количество хэштегов превышает допустимое';
-//   } else if (!hashtags.every(isValidHashtag)) {
-//     hashtagError = 'Хэштег написан с ошибкой';
-//   } else if (!areUniqueTags(hashtags)) {
-//     hashtagError = 'Хэштеги повторяются';
-//   }
-// };
-
 const validateHashtags = (string) => {
   const hashtags = string.trim().split(' ').filter((hashtag) => hashtag.trim());
-  // getHashtagError(hashtags);
   return isValidCount(hashtags) && areUniqueTags(hashtags) && hashtags.every(isValidHashtag);
+};
+
+
+const getHashtagError = (string) => {
+  const hashtags = string.trim().split(' ').filter((hashtag) => hashtag.trim());
+  if (!isValidCount(hashtags)) {
+    return 'Количество хэштегов превышает допустимое';
+  } else if (!hashtags.every(isValidHashtag)) {
+    return 'Хэштег написан с ошибкой';
+  } else if (!areUniqueTags(hashtags)) {
+    return 'Хэштеги повторяются';
+  }
 };
 
 pristine.addValidator(
   hashtagsInput,
   validateHashtags,
-  hashtagError
+  getHashtagError
 );
 
 const validateDescription = (string) => string.length <= DESCRIPTION_MAX_LENGTH;
@@ -160,25 +159,21 @@ const closeModalWithBody = (evt) => {
   }
 };
 
-const onFormSubmit = () => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const isValidated = pristine.validate();
-    if (isValidated) {
-      blockSubmitButton();
-      successButton.addEventListener('click', closeModalWithButton);
-      errorButton.addEventListener('click', closeModalWithButton);
-      document.addEventListener('keydown', closeModalWithEsc);
-      document.addEventListener('click', closeModalWithBody);
-      unblockSubmitButton();
-      showSuccessMessage();
-    } else {
-      showError();
-    }
-  });
-};
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const isValidated = pristine.validate();
+  if (isValidated) {
+    blockSubmitButton();
+    successButton.addEventListener('click', closeModalWithButton);
+    errorButton.addEventListener('click', closeModalWithButton);
+    document.addEventListener('keydown', closeModalWithEsc);
+    document.addEventListener('click', closeModalWithBody);
+    unblockSubmitButton();
+    showSuccessMessage();
+  } else {
+    showError();
+  }
+});
 
 uploadFile.addEventListener('change', onInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
-
-export { onFormSubmit };
