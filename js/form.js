@@ -21,23 +21,22 @@ const DESCRIPTION_MAX_LENGTH = 140;
 const DESCRIPTION_ERROR_TEXT = 'Максимальная длина описания - 140 символов'
 
 
-const pristine = new Pristine(textInputs, {
+const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field--invalid',
-  successClass: 'img-upload__field--valid',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'p',
   errorTextClass: 'img-upload__error-text'
 });
 
 const closeModal = () => {
   body.classList.remove('modal-open');
   imgUpload.classList.add('hidden');
+  pristine.reset();
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const openModal = () => {
   pristine.reset();
+  form.reset();
   body.classList.add('modal-open');
   imgUpload.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -45,7 +44,6 @@ const openModal = () => {
 
 const isInTextFieldset = () =>
   document.activeElement === hashtagsInput || document.activeElement === descriptionInput;
-
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && !isInTextFieldset()) {
@@ -62,8 +60,6 @@ const onInputChange = () => {
   openModal();
 };
 
-pristine.addValidator(form.querySelector('.text__description'));
-
 const isValidHashtag = (hashtag) => VALID_HASHTAG.test(hashtag);
 const isValidCount = (hashtags) => hashtags.length <= HASHTAG_COUNT_MAX;
 const areUniqueTags = (hashtags) => {
@@ -71,21 +67,21 @@ const areUniqueTags = (hashtags) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-let hashtagError = '';
+let hashtagError = 'Неправильно заполнены хэштэги';
 
-const getHashtagError = (hashtags) => {
-  if (!isValidCount(hashtags)) {
-    hashtagError = 'Количество хэштегов превышает допустимое';
-  } else if (!hashtags.every(isValidHashtag)) {
-    hashtagError = 'Хэштег написан с ошибкой';
-  } else if (!areUniqueTags(hashtags)) {
-    hashtagError = 'Хэштеги повторяются';
-  }
-};
+// const getHashtagError = (hashtags) => {
+//   if (!isValidCount(hashtags)) {
+//     hashtagError = 'Количество хэштегов превышает допустимое';
+//   } else if (!hashtags.every(isValidHashtag)) {
+//     hashtagError = 'Хэштег написан с ошибкой';
+//   } else if (!areUniqueTags(hashtags)) {
+//     hashtagError = 'Хэштеги повторяются';
+//   }
+// };
 
 const validateHashtags = (string) => {
   const hashtags = string.trim().split(' ').filter((hashtag) => hashtag.trim());
-  getHashtagError(hashtags);
+  // getHashtagError(hashtags);
   return isValidCount(hashtags) && areUniqueTags(hashtags) && hashtags.every(isValidHashtag);
 };
 
@@ -140,6 +136,7 @@ const showError = () => {
     }
   };
 };
+const showErrorMessage = showError();
 
 const hideModalMessage = () => {
   success.classList.add('hidden');
