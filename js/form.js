@@ -3,7 +3,7 @@ import { isEscapeKey } from './util.js';
 const form = document.querySelector('.img-upload__form');
 const uploadFile = form.querySelector('#upload-file');
 const imgUpload = form.querySelector('.img-upload__overlay');
-const body = document.querySelector('body');
+const body = document.documentElement;
 const hashtagsInput = form.querySelector('.text__hashtags');
 const descriptionInput = form.querySelector('.text__description');
 const cancelButton = document.querySelector('.img-upload__cancel');
@@ -12,14 +12,11 @@ const success = document.querySelector('#success').content.querySelector('.succe
 const successButton = document.querySelector('#success').content.querySelector('.success__button');
 const error = document.querySelector('#error').content.querySelector('.error');
 const errorButton = document.querySelector('#error').content.querySelector('.error__button');
-const textInputs = form.querySelector('.img-upload__text');
-
 
 const HASHTAG_COUNT_MAX = 5;
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const DESCRIPTION_MAX_LENGTH = 140;
 const DESCRIPTION_ERROR_TEXT = 'Максимальная длина описания - 140 символов'
-
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -162,16 +159,16 @@ const closeModalWithBody = (evt) => {
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValidated = pristine.validate();
+  successButton.addEventListener('click', closeModalWithButton);
+  errorButton.addEventListener('click', closeModalWithButton);
+  document.addEventListener('keydown', closeModalWithEsc);
+  document.addEventListener('click', closeModalWithBody);
   if (isValidated) {
     blockSubmitButton();
-    successButton.addEventListener('click', closeModalWithButton);
-    errorButton.addEventListener('click', closeModalWithButton);
-    document.addEventListener('keydown', closeModalWithEsc);
-    document.addEventListener('click', closeModalWithBody);
     unblockSubmitButton();
     showSuccessMessage();
   } else {
-    showError();
+    showErrorMessage();
   }
 });
 
