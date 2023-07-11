@@ -158,7 +158,7 @@ const closeModalWithBody = (evt) => {
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const isValidated = pristine.validate();
+  const isValidated = pristine.validate(hashtagsInput) && pristine.validate(descriptionInput) && pristine.validate(uploadFile);
   successButton.addEventListener('click', closeModalWithButton);
   errorButton.addEventListener('click', closeModalWithButton);
   document.addEventListener('keydown', closeModalWithEsc);
