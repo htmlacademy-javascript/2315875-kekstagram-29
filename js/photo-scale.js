@@ -6,6 +6,7 @@ const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const SCALE_STEP = 25;
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
+const SCALE_DEFAULT = 100;
 
 const zoom = (value) => {
   scaleValue.value = `${value}%`;
@@ -29,3 +30,9 @@ scaleButtonBig.addEventListener('click', () => {
   }
   zoom(newValue);
 });
+
+const scaleReset = () => {
+  zoom(SCALE_DEFAULT);
+};
+
+export { scaleReset };

@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import { resetEffects } from './photo-effects.js';
+import { scaleReset } from './photo-scale.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadFile = form.querySelector('#upload-file');
@@ -16,7 +18,7 @@ const errorButton = document.querySelector('#error').content.querySelector('.err
 const HASHTAG_COUNT_MAX = 5;
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const DESCRIPTION_MAX_LENGTH = 140;
-const DESCRIPTION_ERROR_TEXT = 'Максимальная длина описания - 140 символов'
+const DESCRIPTION_ERROR_TEXT = 'Максимальная длина описания - 140 символов';
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -27,6 +29,9 @@ const pristine = new Pristine(form, {
 const closeModal = () => {
   body.classList.remove('modal-open');
   imgUpload.classList.add('hidden');
+  form.reset();
+  resetEffects();
+  scaleReset();
   pristine.reset();
   document.removeEventListener('keydown', onDocumentKeydown);
 };

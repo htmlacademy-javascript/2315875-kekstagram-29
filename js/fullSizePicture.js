@@ -84,7 +84,6 @@ const renderData = (dataCard) => {
     const photo = dataCard.find((item) => item.id === +data.dataset.photoId);
     document.body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
-    hideSlider();
     bigPictureImage.setAttribute('src', photo.url);
     bigPictureLikes.textContent = photo.likes;
     bigPictureSocialCaption.textContent = photo.description;

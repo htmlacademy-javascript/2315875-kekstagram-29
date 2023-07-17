@@ -115,3 +115,5 @@ hideSlider();
 
 effectsFieldset.addEventListener('change', changeEffect);
 sliderElement.noUiSlider.on('update', updateSliderValue);
+
+export { resetEffects };
