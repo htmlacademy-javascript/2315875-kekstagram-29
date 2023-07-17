@@ -47,12 +47,12 @@ const openModal = () => {
 const isInTextFieldset = () =>
   document.activeElement === hashtagsInput || document.activeElement === descriptionInput;
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt) && !isInTextFieldset()) {
     evt.preventDefault();
     closeModal();
   }
-};
+}
 
 const onCancelButtonClick = () => {
   closeModal();

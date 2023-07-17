@@ -59,10 +59,10 @@ const DEFAULT_EFFECT = EFFECTS[0];
 let selectedEffect = DEFAULT_EFFECT;
 
 const hideSlider = () => {
-  imgUploadEffectLevel.classList.remove('hidden');
+  imgUploadEffectLevel.classList.add('hidden');
 };
 const showSlider = () => {
-  imgUploadEffectLevel.classList.add('hidden');
+  imgUploadEffectLevel.classList.remove('hidden');
 };
 
 const updateSlider = () => {
@@ -75,9 +75,9 @@ const updateSlider = () => {
     start: selectedEffect.max,
   });
   if (selectedEffect === DEFAULT_EFFECT) {
-    showSlider();
-  } else {
     hideSlider();
+  } else {
+    showSlider();
   }
 };
 
