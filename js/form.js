@@ -165,7 +165,6 @@ const closeModalWithBody = (evt) => {
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
     const isValidated = pristine.validate([hashtagsInput, descriptionInput]);
     errorButton.addEventListener('click', closeModalWithButton);
     successButton.addEventListener('click', closeModalWithButton);
