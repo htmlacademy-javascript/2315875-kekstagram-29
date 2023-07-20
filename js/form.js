@@ -1,6 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { resetEffects } from './photo-effects.js';
 import { scaleReset } from './photo-scale.js';
+import { sendData } from './api.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadFile = form.querySelector('#upload-file');
@@ -47,7 +48,7 @@ const openModal = () => {
 const isInTextFieldset = () =>
   document.activeElement === hashtagsInput || document.activeElement === descriptionInput;
 
-function onDocumentKeydown (evt) {
+function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !isInTextFieldset()) {
     evt.preventDefault();
     closeModal();
@@ -161,21 +162,34 @@ const closeModalWithBody = (evt) => {
   }
 };
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValidated = pristine.validate([hashtagsInput, descriptionInput, uploadFile]);
-  errorButton.addEventListener('click', closeModalWithButton);
-  successButton.addEventListener('click', closeModalWithButton);
-  document.addEventListener('keydown', closeModalWithEsc);
-  document.addEventListener('click', closeModalWithBody);
-  if (isValidated) {
-    blockSubmitButton();
-    unblockSubmitButton();
-    showSuccessMessage();
-  } else {
-    showErrorMessage();
-  }
-});
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValidated = pristine.validate([hashtagsInput, descriptionInput]);
+    errorButton.addEventListener('click', closeModalWithButton);
+    successButton.addEventListener('click', closeModalWithButton);
+    document.addEventListener('keydown', closeModalWithEsc);
+    document.addEventListener('click', closeModalWithBody);
+    if (isValidated) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .then(
+          () => {
+            showSuccessMessage();
+          }
+        )
+        .catch(
+          () => {
+            showErrorMessage();
+          }
+        )
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 
 uploadFile.addEventListener('change', onInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
+
+export { setUserFormSubmit, closeModal };
