@@ -1,6 +1,7 @@
 import { createPictures } from './miniatures.js';
 import { createCommentItem } from './create-comment.js';
 import { isEscapeKey } from './util.js';
+import { debounce } from './util.js';
 
 const pictures = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
@@ -12,7 +13,44 @@ const bigPictureSocialCaption = document.querySelector('.big-picture .social__ca
 const bigPictureShowingComments = document.querySelector('.big-picture .showing-comments');
 const commentsLoader = document.querySelector('.comments-loader');
 const postCommentsCount = document.querySelector('.comments-count');
+const filters = document.querySelector('.img-filters');
+const filterForm = filters.querySelector('.img-filters__form');
+const filterButtons = filters.querySelectorAll('.img-filters__button');
 
+const FILTER_DATA = {
+  default: 'filter-default',
+  random: 'filter-random',
+  discussed: 'filter-discussed',
+};
+
+const getIntervalRandom = (postsLength) => {
+  const maxRandom = postsLength - 10;
+  const startRandom = Math.floor(Math.random() * maxRandom);
+  const endRandom = startRandom + 10;
+
+  return [startRandom, endRandom];
+};
+
+const filter = {
+  [FILTER_DATA.default]: (posts) => posts,
+  [FILTER_DATA.random]: (posts) => posts.slice(...getIntervalRandom(posts.length)),
+  [FILTER_DATA.discussed]: (posts) => posts.sort((a, b) => (b.comments.length > a.comments.length) ? 1 : -1),
+};
+
+const resetNode = () => {
+  const allPictures = document.querySelectorAll('.picture');
+  for (const picture of allPictures) {
+    picture.remove();
+  }
+};
+
+const getActiveClass = (evt) => {
+  for (const button of filterButtons) {
+    button.classList.remove('img-filters__button--active');
+  }
+
+  evt.classList.add('img-filters__button--active');
+};
 
 const onClick = (element, func, className) => {
   element.addEventListener('click', (evt) => {
@@ -77,6 +115,7 @@ function closeBigPictureWithEsc(evt) {
 
 const renderData = (dataCard) => {
   createPictures(dataCard);
+  filters.classList.remove('img-filters--inactive');
   const openBigPicture = (data) => {
     if (!data) {
       return;
@@ -98,7 +137,20 @@ const renderData = (dataCard) => {
     document.addEventListener('keydown', closeBigPictureWithEsc);
   };
 
+  const filterData = (evt) => {
+    if (evt.tagName !== 'BUTTON') {
+      return;
+    }
+    resetNode();
+    getActiveClass(evt);
+    const filterDataCard = filter[evt.id](dataCard.slice());
+    createPictures(filterDataCard);
+    filterForm.removeEventListener('click', filterData);
+  };
+
+
   onClick(pictures, openBigPicture, 'picture__img');
+  onClick(filterForm, debounce(filterData, 500), 'img-filters__button');
 };
 
 export { renderData };
