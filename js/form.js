@@ -38,8 +38,6 @@ const closeModal = () => {
 };
 
 const openModal = () => {
-  pristine.reset();
-  form.reset();
   body.classList.add('modal-open');
   imgUpload.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -165,7 +163,7 @@ const closeModalWithBody = (evt) => {
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const isValidated = pristine.validate([hashtagsInput, descriptionInput]);
+    const isValidated = pristine.validate();
     errorButton.addEventListener('click', closeModalWithButton);
     successButton.addEventListener('click', closeModalWithButton);
     document.addEventListener('keydown', closeModalWithEsc);

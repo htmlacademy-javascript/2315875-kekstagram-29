@@ -1,5 +1,6 @@
 import './photo-scale.js';
 import './photo-effects.js';
+import './upload-photo.js';
 import { renderData } from './fullSizePicture.js';
 import {getData} from './api.js';
 import { showAlert } from './util.js';
