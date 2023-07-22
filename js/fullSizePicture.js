@@ -3,7 +3,7 @@ import { createCommentItem } from './create-comment.js';
 import { isEscapeKey } from './util.js';
 import { debounce } from './util.js';
 
-const body = document.querySelector('body';)
+const body = document.querySelector('body');
 const pictures = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const commentList = document.querySelector('.social__comments');
