@@ -3,6 +3,7 @@ import { createCommentItem } from './create-comment.js';
 import { isEscapeKey } from './util.js';
 import { debounce } from './util.js';
 
+const body = document.querySelector('body';)
 const pictures = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const commentList = document.querySelector('.social__comments');
@@ -97,7 +98,7 @@ const loadComments = () => {
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  body.classList.remove('modal-open');
   commentsLoader.removeEventListener('click', loadComments);
   closeBigPictureButton.removeEventListener('click', closeBigPicture);
   document.removeEventListener('keydown', closeBigPictureWithEsc);
@@ -106,7 +107,7 @@ const closeBigPicture = () => {
 function closeBigPictureWithEsc(evt) {
   if (isEscapeKey(evt)) {
     bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
+    body.classList.remove('modal-open');
     commentsLoader.removeEventListener('click', loadComments);
     closeBigPictureButton.removeEventListener('click', closeBigPicture);
     document.removeEventListener('keydown', closeBigPictureWithEsc);
@@ -121,7 +122,7 @@ const renderData = (dataCard) => {
       return;
     }
     const photo = dataCard.find((item) => item.id === +data.dataset.photoId);
-    document.body.classList.add('modal-open');
+    body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
     bigPictureImage.setAttribute('src', photo.url);
     bigPictureLikes.textContent = photo.likes;
