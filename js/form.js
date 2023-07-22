@@ -114,7 +114,7 @@ const showSuccess = () => {
   return () => {
     if (!flag) {
       flag = true;
-      document.body.append(success);
+      body.append(success);
     } else {
       const successClone = document.querySelector('.success');
       successClone.classList.remove('hidden');
@@ -129,7 +129,7 @@ const showError = () => {
   return () => {
     if (!flag) {
       flag = true;
-      document.body.append(error);
+      body.append(error);
     } else {
       const errorClone = document.querySelector('.error');
       errorClone.classList.remove('hidden');
