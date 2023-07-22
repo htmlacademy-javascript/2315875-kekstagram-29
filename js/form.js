@@ -6,7 +6,7 @@ import { sendData } from './api.js';
 const form = document.querySelector('.img-upload__form');
 const uploadFile = form.querySelector('#upload-file');
 const imgUpload = form.querySelector('.img-upload__overlay');
-const body = document.documentElement;
+const body = document.querySelector('body');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const descriptionInput = form.querySelector('.text__description');
 const cancelButton = document.querySelector('.img-upload__cancel');
